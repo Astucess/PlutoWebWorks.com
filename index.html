@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth bg-black text-white">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NexaDesigns - The Ultimate Solution For your Web</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Three.js -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.154.0/build/three.min.js"></script>
+<!-- GSAP -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.11.5/dist/gsap.min.js"></script>
+<!-- Vanilla Tilt -->
+<script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+<!-- Rellax Parallax -->
+<script src="https://cdn.jsdelivr.net/npm/rellax@1.12.1/rellax.min.js"></script>
+<style>
+:root {
+--neon-cyan: #00ffd5;
+--neon-pink: #ff49db;
+--glass-alpha: 0.18;
+}
+html, body {
+margin: 0; padding: 0; height: 100%;
+font-family: 'Inter', system-ui, sans-serif;
+background-color: #000;
+overflow-x: hidden;
+color: #f2f2f8;
+}
+nav {
+position: fixed;
+top: 0; left: 0; right: 0;
+background: rgba(10,10,15,0.8);
+backdrop-filter: blur(16px);
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 1rem 2rem;
+z-index: 100;
+box-shadow: 0 0 18px rgba(0, 255, 213, 0.32);
+user-select: none; gap:2rem;
+}
+.logo {
+font-size: 2rem;
+font-weight: 900;
+color: var(--neon-cyan);
+letter-spacing: 0.13em;
+cursor: pointer;
+text-shadow: 0 0 15px var(--neon-cyan);
+transition: text-shadow 0.3s;
+}
+.logo:hover {text-shadow: 0 0 25px var(--neon-pink);}
+nav .nav-links {
+display: flex;
+gap: 1.5rem;
+}
+nav button {
+background: transparent;
+border: none;
+color: #84ffeeda;
+font-weight: 600;
+font-size: 1.11rem;
+cursor: pointer;
+padding: 0.3rem 1rem;
+border-radius: 0.5rem;
+outline: none;
+transition: background-color 0.3s, color 0.3s, transform .2s;
+}
+nav button.active, nav button:focus-visible {
+color: var(--neon-cyan);
+background: rgba(0, 255, 213, .18);
+border-bottom: 3px solid var(--neon-pink);
+box-shadow: 0 2px 12px 0 var(--neon-pink);
+font-weight: 700;
+transform: scale(1.13);
+}
+nav button:hover {
+color: var(--neon-pink);
+background: rgba(255, 73, 219, 0.09);
+}
+.blob { position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; opacity: .55; z-index: -10;}
+.blob1 { width: 36vw; height: 36vw; top: 5vh; left: -17vw; background: var(--neon-cyan);}
+.blob2 { width: 28vw; height: 28vw; bottom: 3vh; right: 6vw; background: var(--neon-pink);}
+.blob3 { width: 22vw; height: 22vw; top: 55vh; left: 68vw; background: var(--neon-pink);}
+.section-card {
+background: rgba(20, 20, 25, var(--glass-alpha));
+backdrop-filter: blur(16px);
+border-radius: 1.6rem;
+border: 1.8px solid var(--neon-cyan);
+box-shadow: 0 8px 32px rgba(0,255,213,.27),inset 0 0 14px rgba(0,255,213,0.15);
+padding: 3rem 2.6rem;
+width: 100%;
+max-width: 850px;
+margin: 0 auto 3.5rem auto;
+user-select: text;
+will-change: box-shadow, transform;
+cursor: pointer;
+transition: box-shadow .3s, transform .26s;
+display: none;
+opacity: 0;
+transform: scale(0.95) translateY(30px);
+}
+.section-card.active {
+display: block;
+}
+h1, h2, h3 {
+font-weight: 900;
+letter-spacing: 0.064em;
+text-shadow:0 0 7px var(--neon-cyan),0 0 18px var(--neon-cyan);
+}
+h1 { font-size: 2.7rem; margin-bottom: .65rem;}
+h2 { font-size: 2.15rem; margin-bottom: 1.1rem;}
+@media (min-width: 900px) {
+h1 {font-size:3.65rem;}
+h2 {font-size:2.55rem;}
+}
+p, ul { color: #e1e1ff; font-weight: 500; line-height: 1.67; letter-spacing: .007em;}
+b, strong { color: var(--neon-cyan);}
+a { color: var(--neon-pink); text-decoration: underline; font-weight: 700; transition: color 0.3s;}
+a:hover, a:focus { color: var(--neon-cyan);}
+.cta-btn {
+margin-top: 2rem;
+background-color: var(--neon-cyan);
+color: #000;
+font-weight: 900;
+font-size: 1.19rem;
+padding: 1rem 2.9rem;
+border: none;
+border-radius: 1.18rem;
+cursor: pointer;
+box-shadow: 0 0 23px var(--neon-cyan);
+transition: transform .29s, box-shadow .27s;
+user-select: none; letter-spacing: .09em;
+}
+.cta-btn:hover, .cta-btn:focus {transform: scale(1.08); box-shadow: 0 0 40px var(--neon-pink);}
+#three-bg { position: fixed; inset: 0; z-index: 0; user-select: none; pointer-events: none; opacity: .13; filter:brightness(.98) contrast(1.47);}
+.project-list li { margin: .7rem 0; }
+@media (max-width: 700px){
+.section-card {padding: 1.0rem .6rem;}
+h1 {font-size:2.01rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- Parallax neon blobs -->
+<div class="blob blob1" data-rellax-speed="-3"></div>
+<div class="blob blob2" data-rellax-speed="4"></div>
+<div class="blob blob3" data-rellax-speed="-2"></div>
+<!-- Animated 3D bg -->
+<canvas id="three-bg"></canvas>
+
+<!-- Navigation -->
+<nav>
+<div class="logo">NexaDesigns</div>
+<div class="nav-links" role="menubar">
+<button class="nav-btn active" data-target="home">Home</button>
+<button class="nav-btn" data-target="about">About</button>
+<button class="nav-btn" data-target="services">Services</button>
+<button class="nav-btn" data-target="projects">Projects</button>
+<button class="nav-btn" data-target="contact">Contact</button>
+</div>
+</nav>
+
+<!-- Home -->
+<section id="home" class="section-card active mt-28" tabindex="-1" data-tilt data-tilt-max="11" data-tilt-speed="260">
+  <h1>Building the <span style="color: var(--neon-cyan)">Future</span> of Digital Experience</h1>
+  <p>
+    Hi, I'm <strong>Arhan</strong>, the mind behind
+    <a href="https://astucess.github.io/astucess.xyz/" target="_blank" rel="noopener">NexaDesigns</a> — a futuristic web design and development brand focused on building bold, immersive, and high-performance digital experiences.<br><br>
+    With a passion for cutting-edge UI/UX, I specialize in creating 3D-style websites, interactive portfolios, and modern e-commerce platforms using:<br>
+    <strong>Frontend:</strong> HTML, CSS, JavaScript, React, Tailwind CSS<br>
+    <strong>Backend & Databases:</strong> Node.js, Express, Firebase, Supabase<br>
+    <strong>Platforms:</strong> WordPress, Shopify, WooCommerce, Sanity, Strapi<br>
+    <strong>Design Tools:</strong> Figma, Canva, Adobe XD<br><br>
+    At NexaDesigns, I blend code with creativity to deliver next-gen websites that are visually futuristic, responsive, SEO-optimized, and buttery-smooth on every device.
+  </p>
+  <a href="https://astucess.github.io/astucess.xyz/" target="_blank" class="cta-btn" tabindex="0">Visit My Work</a>
+</section>
+
+<!-- About -->
+<section id="about" class="section-card mt-28" tabindex="-1" data-tilt data-tilt-max="12" data-tilt-speed="340">
+  <h2>About Me</h2>
+  <p>
+    Hi, I'm Arhan, the creator of <a href="https://astucess.github.io/astucess.xyz/" target="_blank" rel="noopener">NexaDesigns</a> — a futuristic web design and development brand focused on building bold, immersive, and high-performance digital experiences.<br>
+    With a strong passion for cutting-edge UI/UX, I specialize in creating 3D-style websites, interactive portfolios, and modern e-commerce platforms using:<br>
+    <strong>Frontend:</strong> HTML, CSS, JavaScript, React, Tailwind CSS<br>
+    <strong>Backend &amp; DBs:</strong> Node.js, Express, Firebase, Supabase<br>
+    <strong>Platforms:</strong> WordPress, Shopify, WooCommerce, Sanity, Strapi<br>
+    <strong>Design Tools:</strong> Figma, Canva, Adobe XD<br><br>
+    At NexaDesigns, I blend code with creativity to deliver next-gen websites that are not only visually futuristic but also responsive, SEO-optimized, and smooth across all devices.<br><br>
+    Some of my featured works include <b>The Chai Stop</b>, <b>NeoFit</b>, and <b>Zayrah Store</b> — each project built with a clear focus on usability, performance, and aesthetic innovation.<br><br>
+    Beyond the code and design, I believe in crafting experiences that connect emotionally—merging technology, creativity, and human-centered principles.<br>
+    I strive for accessibility, clean performance, and scalable architectures ensuring your website isn’t just beautiful, but built to last.<br><br>
+    Collaboration and transparency guide my process. I work closely with clients from concept through launch, adapting to feedback and challenges with agility.<br>
+    Whether it's a startup seeking groundbreaking visuals or an established brand wanting to modernize, NexaDesigns offers tailored solutions with a passion for excellence.<br><br>
+    <span style="color:var(--neon-cyan);"><b>⚙️ Crafted with love at NexaDesigns — where creativity meets code.</b></span>
+  </p>
+  <a href="https://astucess.github.io/astucess.xyz/" target="_blank" class="cta-btn" tabindex="0">See Portfolio</a>
+</section>
+
+<!-- Services -->
+<section id="services" class="section-card mt-28" tabindex="-1" data-tilt data-tilt-max="10" data-tilt-speed="320">
+  <h2>Services</h2>
+  <ul class="project-list text-lg">
+    <li>
+      <b>🌟 3D Interactive Portfolios</b><br>
+      Create immersive and highly interactive portfolios using WebGL, Three.js, and React Three Fiber combining stunning visuals with smooth performance to showcase your unique skills and projects.
+    </li>
+    <li>
+      <b>⚡ Neon-Glass UI/UX Designs</b><br>
+      Leverage advanced Tailwind CSS, glassmorphism, and custom CSS animations combined with CSS Grid and Flexbox for crisp, modern, and dynamic interfaces to engage every visitor.
+    </li>
+    <li>
+      <b>🚀 Business Sites & Product Pages</b><br>
+      Build highly optimized, responsive landing pages and business websites utilizing SEO best practices, performance tuning, and intuitive navigation to maximize conversions and brand impact.
+    </li>
+    <li>
+      <b>🛍️ E-Commerce Solutions</b><br>
+      Offering custom Shopify integrations, WooCommerce stores, and fully bespoke e-commerce platforms with fast, secure checkout flows, payment processing, and user-friendly product management.
+    </li>
+    <li>
+      <b>🎨 Creative Brand Portfolios & Micro-Interactions</b><br>
+      Design pixel-perfect brand portfolios integrating subtle micro-animations, hover effects, and scroll-triggered animations to elevate user experience and storytelling.
+    </li>
+    <li>
+      <b>📱 Mobile Optimization & Speed Fixes</b><br>
+      Ensure swift loading times, adaptive layouts, and flawless responsiveness across all devices by optimizing images, lazy loading, and employing modern frontend best practices.
+    </li>
+    <li>
+      <b>🔧 Custom Web Development and Integrations</b><br>
+      Tailor backend integrations, CMS solutions (Sanity, Strapi), and API connectivity tailored to your business needs for scalable and maintainable web applications.
+    </li>
+    <li>
+      <b>📈 SEO Audits and Performance Consulting</b><br>
+      Analyze your current website’s SEO and performance metrics, providing actionable recommendations combined with hands-on fixes for improved visibility and user retention.
+    </li>
+  </ul>
+</section>
+
+<!-- Projects -->
+<section id="projects" class="section-card mt-28" tabindex="-1">
+  <h2>Projects</h2>
+  <ul class="project-list text-lg grid grid-cols-1 md:grid-cols-2 gap-7">
+    <li class="project-tilt bg-white/5 border border-[color:var(--neon-pink)] rounded-xl p-5 hover:scale-105 transition" data-tilt data-tilt-max="12">
+      <strong>Astucess Clients</strong> — NextGen Digital Solutions delivering tailored web platforms and seamless UI/UX improvements.
+    </li>
+    <li class="project-tilt bg-white/5 border border-[color:var(--neon-cyan)] rounded-xl p-5 hover:scale-105 transition" data-tilt>
+      <strong>NeoFit</strong>: State-of-the-art fitness UI platform featuring dynamic themes, scroll-triggered animations, and real-time challenge leaderboards.
+    </li>
+    <li class="project-tilt bg-white/5 border border-[color:var(--neon-pink)] rounded-xl p-5 hover:scale-105 transition" data-tilt>
+      <strong>Zayrah Store</strong>: Clean, fast, and visually compelling custom e-commerce site optimized for conversions and SEO.
+    </li>
+    <li class="project-tilt bg-white/5 border border-[color:var(--neon-cyan)] rounded-xl p-5 hover:scale-105 transition" data-tilt>
+      <strong>CreativePulse Gallery</strong>: Art portfolio using the latest CSS Grid and container queries for an adaptive, museum-quality experience on any device.
+    </li>
+  </ul>
+</section>
+
+
+<!-- Contact -->
+<section id="contact" class="section-card mt-28 mb-12" tabindex="-1" data-tilt data-tilt-max="11" data-tilt-speed="311">
+<h2>Contact</h2>
+<form action="mailto:contact@nexadesigns.com" method="POST" class="mt-4 space-y-3">
+<input type="text" name="name" placeholder="Your Name" required class="w-full bg-black/30 rounded px-5 py-3 border border-[color:var(--neon-cyan)] text-lg text-[color:var(--neon-cyan)] outline-none focus:ring-2 focus:ring-[color:var(--neon-pink)] transition"/>
+<input type="email" name="email" placeholder="Your Email" required class="w-full bg-black/30 rounded px-5 py-3 border border-[color:var(--neon-pink)] text-lg text-[color:var(--neon-cyan)] outline-none focus:ring-2 focus:ring-[color:var(--neon-cyan)] transition"/>
+<textarea name="message" rows="4" placeholder="Tell us your vision…" class="w-full bg-black/30 rounded px-5 py-3 border border-[color:var(--neon-cyan)] text-lg text-[color:var(--neon-pink)] outline-none focus:ring-2 focus:ring-[color:var(--neon-pink)] transition"></textarea>
+<button type="submit" class="cta-btn">Send Message</button>
+</form>
+</section>
+
+<footer class="text-center p-5 text-white/60 select-none">
+© 2025 NexaDesigns — Crafted By Arhan and Suhaib, code, and imagination.
+</footer>
+
+<script>
+// Parallax blobs on scroll
+new Rellax('.blob', { center: true, round: true, vertical: true, horizontal: false });
+
+// Three.js animated background
+(() => {
+const canvas = document.getElementById('three-bg');
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
+camera.position.z = 60;
+const renderer = new THREE.WebGLRenderer({canvas, alpha: true, antialias: true});
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setClearColor(0x000000, 0);
+const particleCount = 200;
+const geometry = new THREE.BufferGeometry();
+const positions = [];
+const colors = [];
+const color = new THREE.Color();
+for(let i=0; i<particleCount; i++) {
+positions.push((Math.random()-0.5)*120, (Math.random()-0.5)*70, (Math.random()-0.5)*30);
+color.setHSL(0.5 + Math.random()*0.5, 0.8, 0.65);
+colors.push(color.r, color.g, color.b);
+}
+geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+geometry.setAttribute('color', new THREE.Float32BufferAttribute(colors, 3));
+const material = new THREE.PointsMaterial({ vertexColors: true, size: 3.0, sizeAttenuation: true, transparent: true, opacity: 0.12, depthWrite: false });
+const points = new THREE.Points(geometry, material);
+scene.add(points);
+function animate() {
+requestAnimationFrame(animate);
+points.rotation.y += 0.0008;
+points.rotation.x += 0.0004;
+renderer.render(scene, camera);
+}
+animate();
+window.addEventListener('resize', () => {
+camera.aspect = window.innerWidth / window.innerHeight;
+camera.updateProjectionMatrix();
+renderer.setSize(window.innerWidth, window.innerHeight);
+});
+})();
+
+// Vanilla Tilt on all section cards / project cards
+document.querySelectorAll('[data-tilt]').forEach(el => {
+VanillaTilt.init(el, {
+max: el.dataset.tiltMax ? parseInt(el.dataset.tiltMax) : 11,
+speed: el.dataset.tiltSpeed ? parseInt(el.dataset.tiltSpeed) : 300,
+scale: 1.045,
+glare: true,
+'max-glare': .23
+});
+});
+
+// Navigation, instant content switch, GSAP transitions
+const navButtons = document.querySelectorAll('.nav-btn');
+const sections = Array.from(document.querySelectorAll('.section-card'));
+
+function gotoSection(id){
+// Remove 'active' class from all, fade out (with GSAP)
+sections.forEach(sec=>{
+gsap.to(sec, { opacity: 0, scale: .95, y: 30, duration: .36, pointerEvents:'none',
+onComplete: ()=>sec.classList.remove('active') });
+});
+// Nav active state
+navButtons.forEach(btn=>btn.classList.remove('active'));
+// Show new section after fade
+const target = document.getElementById(id);
+setTimeout(()=>{
+if(target){
+target.classList.add('active');
+gsap.fromTo(target, { opacity:0, scale:.96, y:21 }, { opacity:1, scale:1, y:0, duration:.55, ease:"power3.out", pointerEvents:'auto' });
+}
+// Highlight nav
+const idx = ['home','about','services','projects','contact'].indexOf(id);
+if(idx!==-1) navButtons[idx].classList.add('active');
+}, 380);
+}
+// Attach click listeners
+navButtons.forEach(btn=>{
+btn.addEventListener('click', () => gotoSection(btn.dataset.target));
+});
+
+// On load show Home
+setTimeout(()=>gotoSection('home'),130);
+
+</script>
+</body>
+</html>
