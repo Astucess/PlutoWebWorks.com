@@ -559,10 +559,10 @@
   <div id="mobile-menu" role="menu" aria-hidden="true">
     <a href="#home" class="nav-link" role="menuitem" tabindex="-1">Home</a>
     <a href="#about" class="nav-link" role="menuitem" tabindex="-1">About</a>
-    <a href="#services" class="btn btn-primary">EXPLORE SERVICES</a>
+    <a href="#services" class="btn btn-primary">Services</a>
     <a href="#pricing" class="nav-link" role="menuitem" tabindex="-1">Pricing</a>
     <a href="#testimonials" class="nav-link" role="menuitem" tabindex="-1">Testimonials</a>
-    <a href="#contact" class="btn btn-secondary">GET IN TOUCH</a>
+    <a href="#contact" class="btn btn-secondary">Contact</a>
   </div>
   <main>
     <section class="hero" id="home" tabindex="-1">
@@ -574,10 +574,11 @@
           We craft high-performance, visually stunning websites that convert visitors into customers.<br />
           Our bespoke web solutions are designed to make your brand stand out in the digital landscape.
         </p>
-        <div class="action-buttons" role="group" aria-label="Hero action buttons">
-          <button class="btn btn-primary">EXPLORE SERVICES</button>
-          <button class="btn btn-secondary">GET IN TOUCH</button>
-        </div>
+        <div class="action-buttons" role="group" aria-="Hero action buttons">
+  <a href="#services" class="btn btn-primary">EXPLORE SERVICES</a>
+  <a href="#contact" class="btn btn-secondary">GET IN TOUCH</a>
+</div>
+
         <div class="scroll-down" aria-hidden="true">
           <span>Scroll Down</span>
           <span class="scroll-icon"></span>
@@ -633,6 +634,10 @@
   <p class="client-trust">We've had the privilege of working with amazing companies across various industries.</p>
 
   <style>
+a.btn {
+  text-decoration: none;
+}
+
     .interactive-about {
       max-width: 850px;
       margin: 0 auto 70px auto;
