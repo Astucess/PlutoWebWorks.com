@@ -1,178 +1,264 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>PlutoWebWorks</title>
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&display=swap" rel="stylesheet">
-<style>
-:root {
-  --bg-main: #111116;
-  --accent: #7c88fd;
-  --white: #fff;
-  --nav-bg: #151520fa;
-  --nav-select: #b6befd;
-  --button-shadow: 0 0 36px 10px #6a76ef33;
-}
-body, html {
-  margin:0; padding:0;
-  font-family: 'Inter', Arial, sans-serif;
-  background: var(--bg-main);
-  color: var(--white);
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-nav {
-  width: 100%;
-  background: var(--nav-bg);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0 46px;
-  position: fixed;
-  top: 0; left: 0; height: 72px;
-  box-sizing: border-box;
-  z-index: 20;
-}
-.logo {
-  font-size: 2.2rem;
-  font-weight: 800;
-  color: var(--white);
-  letter-spacing: 0.01em;
-}
-.logo span { color: var(--accent); font-weight:900; }
-.nav-links {
-  display: flex; gap: 38px; font-size: 1.17rem; align-items: center;
-}
-.nav-link {
-  color: var(--white); text-decoration: none;
-  font-weight: 500; letter-spacing:0.01em; padding-bottom:3px; opacity:0.87;
-  transition: color 0.16s, opacity 0.18s;
-  position:relative;
-}
-.nav-link.active, .nav-link:hover { color: var(--nav-select); opacity:1; }
-.nav-link.active::after {
-  content:""; display:block; margin:2px auto 0; width:26px; height:2px; border-radius:1px; background:var(--accent);
-}
-.bg-circle {
-  position: absolute; border-radius:50%; pointer-events:none; z-index: 0;
-  background: radial-gradient(circle, rgba(124,136,253,0.17) 55%, transparent 100%);
-  filter: blur(0.5vw); left:-180px; top:220px; width:400px; height:400px;
-}
-.bg-circle-top {
-  left:auto; right:22vw; top:6vw; width:180px; height:180px;
-  background: radial-gradient(circle, rgba(124,136,253,0.10) 30%, transparent 100%);
-  filter: blur(7px);
-}
-.landing {
-  min-height: 100vh;
-  padding: 112px 0 0 0;
-  position: relative;
-  display:flex; flex-direction:column; align-items:center; z-index:1;
-}
-.main-content { max-width:850px; margin:0 auto; padding:0 20px; width:100%; }
-.main-title {
-  font-size: 4.8rem; font-weight: 900; margin:42px 0 0 0; line-height:1.02; letter-spacing:-2px;
-  color: var(--white); z-index:2; position:relative;
-}
-.main-title .gradient {
-  color: var(--accent); text-shadow: 0 0 38px #7c88fd33, 0 0 6px #7c88fd44;
-}
-.main-desc {
-  margin:34px 0 0 0; font-size:1.38rem; color:#b3bbd6; max-width: 600px; font-weight:400; line-height:1.34;
-}
-.buttons-row {
-  display:flex; gap:26px; margin:56px 0 0 0; position:relative; z-index:2;
-}
-.button {
-  padding:16px 46px; font-size:1.09rem; border-radius:32px; font-weight:700; border:none; outline:none;
-  cursor:pointer; letter-spacing:0.04em; box-shadow: var(--button-shadow);
-  background: var(--accent); color: var(--white);
-  transition:background 0.19s,color 0.19s,box-shadow 0.25s; position:relative; overflow:hidden;
-}
-.button:hover { background: #5560e8; box-shadow:0 0 60px 18px #7c88fd55; }
-.button.secondary {
-  background:transparent; border:2px solid var(--accent); color:var(--accent); box-shadow:none;
-}
-.button.secondary:hover { background:#1b1f27; color:var(--white); box-shadow:0 0 24px 8px #7c88fd44; }
-.scroll-indicator {
-  margin:52px auto 0 auto; text-align:center; color:#7c88fd; font-size:1rem; opacity:0.94; z-index:2;
-  position:relative; user-select:none; letter-spacing:0.05em;
-}
-.mouse-icon {
-  width: 24px; height: 38px; border: 2px solid #7c88fd; border-radius: 14px;
-  margin: 9px auto 0 auto; position: relative; background: transparent;
-}
-.mouse-icon .wheel {
-  width: 5px; height: 10px; background: #7c88fd; border-radius: 2.5px; position: absolute; left: 50%; top: 7px;
-  transform: translateX(-50%); animation: scrollWheel 1.6s infinite;
-}
-@keyframes scrollWheel { 0%{opacity:1;transform:translateX(-50%)translateY(0);}
-  100%{opacity:0;transform:translateX(-50%)translateY(15px);}
-}
-.section { max-width:850px; margin:0 auto; padding:140px 20px 50px 20px; min-height:80vh; }
-.section h2 { font-size:2.5rem; font-weight:900; color:var(--accent); margin-bottom:1.2rem; }
-.section p { font-size:1.2rem; color:#c8c8ef; margin:14px 0 0 0; }
-.section ul, .section ol { margin:10px 0 0 20px; color:#e6e8ff; line-height:1.6;}
-.section blockquote {
-  font-style:italic; color:#b4b9da; border-left:3px solid var(--accent); padding-left:1rem; margin:16px 0;
-  font-size:1.14rem; background:rgba(40,48,83,0.11); border-radius:7px;
-}
-.section input, .section textarea {
-  width:100%; padding:12px 12px; border-radius:8px; font-size:1.09rem; border:none; margin:6px 0 16px 0;
-  background:#181a22; color:#b3bbd6;
-}
-.section input:focus, .section textarea:focus { outline:2px solid var(--accent); }
-.section label { font-weight:700; color:var(--white); display:block; margin-top:16px;}
-.section .button {margin-top:16px;}
-.section .contact-details p, .section .contact-details a {font-size:1.12rem; color:#b3bbd6;}
-.section .contact-details a { color:var(--accent); text-decoration:underline;}
-@media (max-width:900px) {
-  .main-title {font-size:2.8rem;}
-  .section h2 {font-size:1.38rem;}
-  nav{padding:0 12vw;}
-}
-@media (max-width:600px) {
-  nav {padding:0 6px;}
-  .logo {font-size:1.3rem;}
-  .nav-links {gap:12px;font-size:0.98rem;}
-  .main-content, .section {padding:0 10px;}
-}
-</style>
+  <meta charset="UTF-8" />
+  <title>PlutoWebWorks</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --accent: #4d5bed;
+      --bg-main: #161622;
+      --bg-gradient: linear-gradient(135deg, #161622 65%, #24244b 100%);
+      --nav-bg: #18182dcc;
+      --nav-blur: blur(28px);
+      --text-primary: #f9f9fb;
+      --text-secondary: #adc1fa;
+      --nav-active: #4d5bed;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg-gradient);
+      font-family: 'Inter', Arial, sans-serif;
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+    /* PRELOADER */
+    #preloader {
+      position: fixed; inset: 0;
+      background: #191a32;
+      z-index: 99999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      transition: opacity 0.7s cubic-bezier(.47,.7,.25,1.15);
+    }
+    #preloader.hide {opacity: 0; pointer-events: none;}
+    .loader-logo {
+      font-family:'Inter',sans-serif;
+      font-weight:900;
+      font-size:2.3rem;
+      color:#5a6afb;
+      margin-bottom:36px;
+      text-shadow:0 0 22px #4d5bed4e;
+      letter-spacing:-3px;
+    }
+    .loader-ring {
+      border:7px solid #29358660;
+      border-top:7px solid #5a6afb;
+      border-radius:50%;
+      width:58px; height:58px;
+      animation: spin 1.08s linear infinite;
+      margin-bottom:28px;
+    }
+    @keyframes spin {100%{transform:rotate(360deg);}}
+    .loader-bar-wrap {
+      width:180px; height:13px; background:#22244c;
+      border-radius:12px; overflow: hidden; margin-bottom:23px;
+      box-shadow: 0 2px 24px #4d5bed19;
+    }
+    .loader-bar {
+      width:0%;
+      height:100%;
+      background:linear-gradient(90deg,#5a6afb 70%, #c7d0ff79 100%);
+      transition: width 0.2s cubic-bezier(.65,.4,.53,1.1);
+    }
+    .loader-text {color:#a6bcfc;font-weight:700;letter-spacing:0.11em;}
+    /* NAV */
+    nav {
+      position: fixed; left: 0; top: 0; width: 100vw; z-index: 100;
+      background: var(--nav-bg);
+      backdrop-filter: var(--nav-blur);
+      box-shadow: 0 0.5px 30px #4d5bed18;
+      display: flex; justify-content: space-between; align-items: center;
+      transition: height 0.32s cubic-bezier(.45,1,.55,.92), box-shadow 0.18s;
+      height: 73px; padding: 0 80px;
+    }
+    nav.scrolled {height:100px; box-shadow:0 8px 64px #5a68fd42;}
+    .logo {
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: var(--text-primary);
+      transition: font-size .35s;
+      letter-spacing:-2px;
+      user-select:none;
+    }
+    nav.scrolled .logo {font-size: 3rem;}
+    .logo span { color: var(--accent); }
+    .nav-links {
+      display: flex; gap: 55px; font-size: 1.13rem; letter-spacing:.02em; user-select:none;
+    }
+    nav.scrolled .nav-links {font-size:1.18rem;}
+    .nav-link {
+      color: #bfcaff;
+      position: relative; padding-bottom: 4px; font-weight: 700; opacity: .85;
+      transition: color 0.17s, opacity 0.17s;
+      cursor:pointer;
+    }
+    .nav-link:hover, .nav-link.active {color: var(--nav-active); opacity: 1;}
+    .nav-link.active::after {
+      content: "";
+      position: absolute; width: 30px; left: 50%; transform: translateX(-50%);
+      height: 3px; background: var(--accent); border-radius: 4px;
+      bottom: -6px;
+    }
+    /* Mobile nav hamburger */
+    .nav-toggle {display:none; position:relative; width:32px;height:32px;background:none;border:none;cursor:pointer;z-index:151;}
+    .hamburger, .hamburger-bar {display:block;}
+    .hamburger-bar {
+      width: 28px; height: 3.6px; background: var(--accent); margin: 5.5px 0; border-radius:2px; transition:.33s;
+    }
+    /* Mobile Sheet Menu */
+    #mobile-menu {
+      position:fixed; left:0;top:0;width:100vw;height:100vh;
+      background:rgba(26,28,56,0.98);backdrop-filter: blur(18px);
+      display:flex;flex-direction:column;justify-content:center;align-items:center;
+      transform:translateY(-120vh); opacity: 0; pointer-events: none;
+      transition: all 0.39s cubic-bezier(.25,.86,.63,1.05);
+      z-index:150;
+    }
+    #mobile-menu.open {transform:translateY(0); opacity: 1; pointer-events: auto;}
+    #mobile-menu .nav-link {font-size:2rem;color:#c9d0fb;padding:17px 0 9px;text-align:center;}
+    #mobile-menu .nav-link.active, #mobile-menu .nav-link:hover {color:var(--accent);}
+    /* Hero Section */
+    .hero {display:flex;justify-content:center;align-items:center;min-height:85vh;margin-bottom:70px;}
+    .hero-inner {margin-top:80px;max-width:670px;margin-left:auto;margin-right:auto;text-align:center;}
+    .hero-title {
+      font-size:4.2rem;
+      font-weight:900;
+      letter-spacing:-2.5px;
+      line-height:1.07;
+      color:var(--text-primary);
+      margin:0 0 1.4rem 0;
+      user-select:none;
+    }
+    .hero-title .gradient {color:var(--accent);
+      text-shadow:0 0 32px #4d5bed60, 0 3px 14px #2a32bce5;}
+    .hero-desc {font-size:1.3rem;font-weight:600;color:var(--text-secondary);margin-bottom:3rem;}
+    .hero-btns {display:flex;gap:32px;justify-content:center;margin-bottom:3.2rem;}
+    .hero-btn {
+      padding:1.17rem 3.5rem;border-radius:36px;font-weight:900;font-size:1.16rem; letter-spacing:0.04em;
+      cursor:pointer;border:none;transition:all 0.22s;box-shadow:0 0 28px #4d5bed25;
+      background:var(--accent);color:white;
+    }
+    .hero-btn:hover {background:#303dc0;box-shadow:0 0 48px 12px #252bc7a0;}
+    .hero-btn.secondary {background:transparent;color:var(--accent);border:2px solid var(--accent);}
+    .hero-btn.secondary:hover {background:var(--accent);color:white;}
+    .scroll-indicator {color:var(--accent);font-size:1.1rem;margin-top:1.5rem;font-weight:700;display:flex;flex-direction:column;align-items:center;gap:8px;}
+    .scroll-icon {border:2px solid var(--accent);border-radius:14px;width:28px;height:44px;position:relative;}
+    .scroll-icon::before {
+      content: ""; position: absolute; top:10px; left:50%;
+      width:6px;height:6px;background:var(--accent);border-radius:50%;
+      transform:translateX(-50%);animation:scrollDot 1.4s infinite;
+    }
+    @keyframes scrollDot {
+      0% {opacity:1;transform:translateX(-50%) translateY(0);}
+      50%{opacity:.64;transform:translateX(-50%) translateY(15px);}
+      100%{opacity:1;transform:translateX(-50%) translateY(0);}
+    }
+    /* SECTION AND CARDS */
+    section {max-width:900px;margin:0 auto;padding:0 5vw 110px;text-align:center;}
+    section h2 {font-size:2.5rem;font-weight:900;color:var(--accent);margin:0 0 22px;letter-spacing:-1px;}
+    section p {font-size:1.18rem;color:var(--text-secondary);}
+    .card-row {display:flex;gap:30px;flex-wrap:wrap;justify-content:center;}
+    .card {
+      background: #22224b; border-radius:16px; box-shadow:0 0 33px #4d5bed18;
+      padding:2rem 1.6rem; min-width:235px; max-width:300px; flex:1 1 250px; color:#c0c4f3;
+      margin-bottom:30px;
+      transition:box-shadow 0.25s,background 0.22s;
+    }
+    .card:hover {box-shadow:0 0 64px #4d5bed33;background:#232467;}
+    .card h3 {color:var(--accent);font-weight:900;margin-bottom:1em;font-size:1.14em;}
+    /* Testimonials */
+    .testimonial-row {display: flex; flex-wrap: wrap; gap: 32px; justify-content: center;}
+    .testimonial-card {background:#1a1b36db;border-radius:16px;padding:22px 20px;max-width:300px;min-width:220px;text-align:left;}
+    .testimonial-card blockquote {font-size:1rem;font-style:italic;color:#d3e4ff;}
+    .testimonial-card .author {margin-top:14px;font-weight:800;color:var(--accent);}
+    /* Contact */
+    #contact form {max-width:410px;margin:0 auto;display:flex;flex-direction:column;}
+    #contact label {font-weight:700;margin-top:17px;color:#fff;}
+    #contact input,#contact textarea {width:100%;background:#21214b;border:none;border-radius:8px;padding:12px 14px;font-size:1.07rem;color:#fff;}
+    #contact input:focus,#contact textarea:focus {outline:2px solid var(--accent);}
+    #contact button {margin-top:20px;padding:14px 0;background:var(--accent);border:none;border-radius:28px;font-weight:900;font-size:1.13rem;color:white;box-shadow:0 0 22px 8px #4d5bed22;}
+    #contact .contact-info {margin-top:24px;text-align:center;font-size:1rem;color:var(--text-secondary);}
+    #contact .contact-info strong {color:var(--accent);}
+    @media (max-width: 950px) {
+      nav,nav.scrolled {padding:0 2.4vw;}
+      .nav-links{gap:25px;}
+      .hero-title{font-size:2.3rem;}
+      .hero-inner{margin-top:42px;}
+      section{padding:0 2vw 86px;}
+      .card-row{gap:18px;}
+    }
+    @media (max-width:700px){
+      .hero-title{font-size:1.34rem;}
+      .hero-desc{font-size:1rem;}
+      .hero{margin-bottom:30px;}
+      .nav-links{display:none;}
+      .nav-toggle{display:block;}
+      section{padding:0 7px 56px;}
+    }
+    @media (max-width:500px){
+      nav,nav.scrolled{padding:0 3vw;}
+      .logo{font-size:1.18rem;}
+    }
+  </style>
 </head>
 <body>
-<div class="bg-circle"></div>
-<div class="bg-circle bg-circle-top"></div>
-<nav>
-  <div class="logo">Pluto<span>WebWorks</span></div>
-  <div class="nav-links">
-    <a href="#hero" class="nav-link active">Home</a>
+  <!-- Preloader -->
+  <div id="preloader">
+    <div class="loader-logo">Pluto<span style="color:#fff">WebWorks</span></div>
+    <div class="loader-ring"></div>
+    <div class="loader-bar-wrap"><div class="loader-bar" id="loader-bar"></div></div>
+    <div class="loader-text" id="loader-text">Loading… 0%</div>
+  </div>
+  <!-- Navigation -->
+  <nav id="mainnav">
+    <div class="logo">Pluto<span>WebWorks</span></div>
+    <button class="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
+      <span class="hamburger" aria-hidden="true">
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+        <span class="hamburger-bar"></span>
+      </span>
+    </button>
+    <div class="nav-links">
+      <a href="#home" class="nav-link active">Home</a>
+      <a href="#about" class="nav-link">About</a>
+      <a href="#services" class="nav-link">Services</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <a href="#testimonials" class="nav-link">Testimonials</a>
+      <a href="#contact" class="nav-link">Contact</a>
+    </div>
+  </nav>
+  <div id="mobile-menu">
+    <a href="#home" class="nav-link active">Home</a>
     <a href="#about" class="nav-link">About</a>
     <a href="#services" class="nav-link">Services</a>
     <a href="#pricing" class="nav-link">Pricing</a>
     <a href="#testimonials" class="nav-link">Testimonials</a>
     <a href="#contact" class="nav-link">Contact</a>
   </div>
-</nav>
-<section class="landing" id="hero">
-  <div class="main-content">
-    <div class="main-title">Elevate Your <span class="gradient">Digital</span><br>Presence</div>
-    <div class="main-desc">
-      We craft high-performance, visually stunning websites that convert visitors into customers.<br>
-      Our bespoke web solutions are designed to make your brand stand out in the digital landscape.
-    </div>
-    <div class="buttons-row">
-      <button class="button" id="btnServices">EXPLORE SERVICES</button>
-      <button class="button secondary" id="btnContact">GET IN TOUCH</button>
-    </div>
-    <div class="scroll-indicator">
-      <div>Scroll Down</div>
-      <div class="mouse-icon"><div class="wheel"></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ABOUT SECTION -->
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-inner">
+        <h1 class="hero-title">
+          Elevate Your <span class="gradient">Digital</span><br>Presence
+        </h1>
+        <p class="hero-desc">
+          We craft high-performance, visually stunning websites that convert visitors into customers.<br>
+          Our bespoke web solutions are designed to make your brand stand out in the digital landscape.
+        </p>
+        <div class="hero-btns">
+          <button class="hero-btn">EXPLORE SERVICES</button>
+          <button class="hero-btn secondary">GET IN TOUCH</button>
+        </div>
+        <div class="scroll-indicator">
+          <span>Scroll Down</span>
+          <span class="scroll-icon" aria-hidden="true"></span>
+        </div>
+      </div>
+    </section>
+    <!-- ABOUT SECTION -->
 <section class="section interactive-about" id="about">
   <h2>About PlutoWebWorks</h2>
   <div class="about-content">
@@ -321,7 +407,7 @@ nav {
   </style>
 </section>
 
-<!-- SERVICES SECTION -->
+    <!-- SERVICES SECTION -->
 <section id="services" class="section">
   <h2>Services</h2>
   <div class="services-grid">
@@ -395,8 +481,8 @@ nav {
 </section>
 
 
-<!-- PRICING SECTION -->
-<section id="pricing" class="section">
+    <!-- PRICING SECTION -->
+    <section id="pricing" class="section">
   <h2>Pricing</h2>
   <p>We offer flexible pricing options to suit businesses of all sizes. All plans include our premium support and performance guarantee.</p>
   <div class="pricing-cards">
@@ -540,7 +626,7 @@ nav {
   </style>
 </section>
 
-<!-- TESTIMONIALS SECTION -->
+   <!-- TESTIMONIALS SECTION -->
 <section id="testimonials" class="section">
   <h2>Testimonials</h2>
   <div class="testimonial-grid">
@@ -618,99 +704,91 @@ nav {
   </style>
 </section>
 
-<!-- CONTACT SECTION -->
-<section id="contact" class="section">
-  <h2>Contact</h2>
-  <p>Have a project in mind or questions about our services? Fill out the form below and we'll get back to you within 24 hours.</p>
-  <form id="contactForm" aria-label="Contact form">
-    <label for="title">Title</label>
-    <input type="text" id="title" name="title" placeholder="Mr, Mrs, etc." required />
-
-    <label for="name">Your Name</label>
-    <input type="text" id="name" name="name" placeholder="Enter your name" required />
-
-    <label for="email">Your Email</label>
-    <input type="email" id="email" name="email" placeholder="Enter your email" required />
-
-    <label for="message">Your Message</label>
-    <textarea id="message" name="message" rows="6" placeholder="Write your message here" required></textarea>
-
-    <button type="submit" class="button primary">Send Message</button>
-  </form>
-  <div style="margin-top: 2rem; font-size: 1rem; color: var(--text-secondary);">
-    <p><strong>Email:</strong> PlutoWebWorks@gmail.com</p>
-    <p><strong>Phone:</strong> +91 7060782247</p>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <section id="contact">
+      <h2>Contact</h2>
+      <form id="contactForm" aria-label="Contact form">
+        <label for="title">Title</label>
+        <input type="text" id="title" name="title" placeholder="Mr, Mrs, etc." required />
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required />
+        <label for="email">Your Email</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required />
+        <label for="message">Your Message</label>
+        <textarea id="message" name="message" rows="6" placeholder="Write your message here" required></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+      <div class="contact-info">
+        <p><strong>Email:</strong> PlutoWebWorks@gmail.com</p>
+        <p><strong>Phone:</strong> +91 7060782247</p>
+      </div>
+    </section>
+  </main>
   <script>
-    (function(){
-      emailjs.init("7boRlNtGqSbIh5NEM");
-    })();
-
-    document.getElementById('contactForm').addEventListener('submit', function(event) {
-      event.preventDefault(); // THIS stops default form submit/reload behavior
-      emailjs.sendForm('service_w4hkqg1', 'template_tw3ywbo', this)
-        .then(() => {
-          alert('Message sent successfully!');
-          this.reset();
-        }, (error) => {
-          alert('Failed to send message. Please try again later.');
-          console.error('EmailJS error:', error);
-        });
+    // Preloader: bar and hide
+    let progress = 0;
+    const bar = document.getElementById("loader-bar");
+    const txt = document.getElementById("loader-text");
+    const preloader = document.getElementById("preloader");
+    const preInt = setInterval(() => {
+      progress++;
+      bar.style.width = progress+"%";
+      txt.textContent = "Loading… " + progress + "%";
+      if(progress>=100){
+        clearInterval(preInt);
+        setTimeout(()=>{
+          preloader.classList.add("hide");
+          setTimeout(()=>{ preloader.style.display = "none"; },800);
+        },450);
+      }
+    },12);
+    // Nav scroll grow/shrink
+    const nav = document.getElementById('mainnav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) nav.classList.add('scrolled');
+      else nav.classList.remove('scrolled');
+    });
+    // Mobile menu
+    const navToggle = document.querySelector('.nav-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    navToggle.addEventListener('click', () => {
+      const expanded = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', (!expanded).toString());
+      mobileMenu.classList.toggle('open');
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        navToggle.setAttribute('aria-expanded', 'false');
+      });
+    });
+    // Navigation active highlighting
+    const navLinks = document.querySelectorAll('nav .nav-link, #mobile-menu .nav-link');
+    function setActiveLink(id) {
+      navLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+      });
+    }
+    navLinks.forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const id = link.getAttribute('href').substring(1);
+        const section = document.getElementById(id);
+        if (section) {
+          section.scrollIntoView({behavior: 'smooth'});
+          setActiveLink(id);
+        }
+      });
+    });
+    // Update active nav on scroll
+    const sections = Array.from(document.querySelectorAll('main > section'));
+    window.addEventListener('scroll', () => {
+      let scrollPos = window.scrollY + window.innerHeight / 3.2;
+      for (let section of sections) {
+        if (scrollPos >= section.offsetTop) {
+          setActiveLink(section.id);
+        }
+      }
     });
   </script>
-</section>
-
-<script>
-// Navigation smooth scroll and active state
-const navLinks = document.querySelectorAll('.nav-link');
-navLinks.forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    const id = link.getAttribute('href').slice(1);
-    const section = document.getElementById(id);
-    if(section) {
-      section.scrollIntoView({ behavior:'smooth' });
-      navLinks.forEach(lnk=>lnk.classList.remove('active'));
-      link.classList.add('active');
-      history.replaceState(null, null, '#'+id);
-    }
-  });
-});
-
-// Hero buttons smooth scroll
-document.getElementById('btnServices').onclick = () => {
-  document.getElementById('services').scrollIntoView({behavior:'smooth'});
-  setActive('services');
-};
-document.getElementById('btnContact').onclick = () => {
-  document.getElementById('contact').scrollIntoView({behavior:'smooth'});
-  setActive('contact');
-};
-function setActive(id) {
-  navLinks.forEach(lnk=>lnk.classList.toggle('active', lnk.getAttribute('href')===`#${id}`));
-}
-
-// Update section/nav active on scroll
-window.addEventListener('scroll',()=>{
-  const sections = ['hero','about','services','pricing','testimonials','contact'];
-  let current='hero';
-  const pos = window.scrollY + 85;
-  for(const id of sections){
-    const el=document.getElementById(id); if(el && pos>=el.offsetTop)current=id;
-  }
-  navLinks.forEach(lnk=>lnk.classList.toggle('active',lnk.getAttribute('href')===`#${current}`));
-  history.replaceState(null, null, '#'+current);
-});
-
-// ESC navigates to hero
-window.addEventListener('keydown', e => {
-  if (e.key === 'Escape') {
-    document.getElementById('hero').scrollIntoView({behavior:'smooth'});
-    setActive('hero');
-  }
-});
-</script>
 </body>
 </html>
